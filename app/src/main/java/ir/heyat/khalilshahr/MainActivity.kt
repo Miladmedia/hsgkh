@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) { super.onCreate(savedInstanceState)
         if (Build.VERSION.SDK_INT >= 33) permission.launch(Manifest.permission.POST_NOTIFICATIONS)
         val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
-        val periodic = PeriodicWorkRequestBuilder<FeedWorker>(30,TimeUnit.MINUTES).setConstraints(constraints).build()
+        val periodic = PeriodicWorkRequestBuilder<FeedWorker>(15,TimeUnit.MINUTES).setConstraints(constraints).build()
         WorkManager.getInstance(this).enqueueUniquePeriodicWork("heyat-periodic-feed",ExistingPeriodicWorkPolicy.KEEP,periodic)
         val once = OneTimeWorkRequestBuilder<FeedWorker>().setConstraints(constraints).build()
         WorkManager.getInstance(this).enqueueUniqueWork("heyat-immediate-feed",ExistingWorkPolicy.KEEP,once)
