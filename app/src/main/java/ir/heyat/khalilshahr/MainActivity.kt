@@ -25,7 +25,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,7 +55,7 @@ private enum class Page(val title: String) { Home("خانه"), Martyrs("شهدا
     var page by remember { mutableStateOf(Page.Home) }; var posts by remember { mutableStateOf(repo.cached()) }; var loading by remember { mutableStateOf(false) }; var error by remember { mutableStateOf<String?>(null) }; var refreshed by remember { mutableStateOf(false) }
     fun refresh() { scope.launch { loading=true; error=null; val result=withContext(Dispatchers.IO){repo.fetch()}; when(result){ is NewsRepository.Fetch.Success->{posts=result.posts; refreshed=true}; is NewsRepository.Fetch.Failure->{error=result.message} }; loading=false } }
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-        MaterialTheme(colorScheme=darkColorScheme(primary=gold,background=forest,surface=Color(0xFF1A3028),onBackground=cream,onSurface=cream), typography=Typography(defaultFontFamily = FontFamily.Default)) {
+        MaterialTheme(colorScheme=darkColorScheme(primary=gold,background=forest,surface=Color(0xFF1A3028),onBackground=cream,onSurface=cream), typography=Typography()) {
             Column(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color(0xFF1B382C),Color(0xFF101714),Color(0xFF101714))))) {
                 Column(Modifier.fillMaxWidth().padding(horizontal=20.dp, vertical=18.dp), horizontalAlignment=Alignment.CenterHorizontally) { Text("✦",color=gold,fontSize=24.sp); Text("هیئت شهدای گمنام خلیل شهر",color=gold,fontSize=21.sp,fontWeight=FontWeight.Bold); Text("خبرهای منتشرشده در منبع عمومی",color=cream.copy(alpha=.7f),fontSize=12.sp) }
                 when(page) {
